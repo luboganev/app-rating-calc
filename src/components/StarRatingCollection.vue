@@ -20,7 +20,7 @@ export default defineComponent({
     };
 
     const reset = () => {
-      ratingCountInputItems.value.forEach(item => {
+      ratingCountInputItems.value.forEach((item: (typeof StarRatingCountInput)) => {
         item.reset();
       });
     };
