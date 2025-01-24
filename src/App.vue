@@ -1,47 +1,85 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
+<script lang="ts">
+import { defineComponent, ref, computed } from 'vue';
+import StarRatingCountInput from './components/StarRatingCountInput.vue';
+import { calculateAverageRating, sumRatingCounts } from './utils/ratingUtils';
+
+export default defineComponent({
+  name: 'App',
+  components: {
+    StarRatingCountInput,
+  },
+  setup() {
+    const currentCountValues = ref<number[]>(new Array(5).fill(0));
+    const neededCountValues = ref<number[]>(new Array(5).fill(0));
+
+    const updateCountCurrent = (index: number, newValue: number) => {
+      currentCountValues.value[index] = newValue;
+    };
+    const updateCountNeeded = (index: number, newValue: number) => {
+      currentCountValues.value[index] = newValue;
+    };
+
+    const averageRating = computed(() => calculateAverageRating(
+      sumRatingCounts(currentCountValues.value, neededCountValues.value)
+    ));
+
+    return {
+      currentCountValues,
+      neededCountValues,
+      updateCountCurrent,
+      updateCountNeeded,
+      averageRating,
+    };
+  }
+});
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+  <div id="app">
+    <div class="app-container">
+      <hr>
+      <h2>Existing ratings</h2>
+      <hr>
+      <div v-for="i in 5" :key="i" class="rating-row">
+        <StarRatingCountInput :rating="i" :count="currentCountValues[i - 1]" @update:count="updateCountCurrent(i - 1, $event)" />
+      </div>
+      <hr>
+      <h2>New ratings</h2>
+      <hr>
+      <div v-for="i in 5" :key="i" class="rating-row">
+        <StarRatingCountInput :rating="i" :count="neededCountValues[i - 1]" @update:count="updateCountNeeded(i - 1, $event)" />
+      </div>
+      <hr>
+      <h2>New rating: {{ averageRating }}</h2>
+      <hr>
     </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+  </div>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
+<style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  text-align: center;
+  margin-top: 8px;
 }
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
+/* Limit the width of the app and center it */
+.app-container {
+  max-width: 480px;
+  /* Set the maximum width */
+  margin: 0 auto;
+  /* Center the container */
+  padding: 8px;
+  /* Optional padding for content spacing */
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+.rating-row {
+  margin-bottom: 10px;
+  /* Space between rows */
+}
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
+p {
+  font-size: 18px;
+  margin-top: 8px;
 }
 </style>
