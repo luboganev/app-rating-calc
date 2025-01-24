@@ -16,7 +16,7 @@ export default defineComponent({
       currentCountValues.value[index] = newValue;
     };
     const updateCountNeeded = (index: number, newValue: number) => {
-      currentCountValues.value[index] = newValue;
+      neededCountValues.value[index] = newValue;
     };
 
     const averageRating = computed(() => calculateAverageRating(
