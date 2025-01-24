@@ -1,34 +1,48 @@
 <script lang="ts">
 import { defineComponent, ref, computed } from 'vue';
-import StarRatingCountInput from './components/StarRatingCountInput.vue';
-import { calculateAverageRating, sumRatingCounts } from './utils/ratingUtils';
+import StarRatingCollection from './components/StarRatingCollection.vue';
+import { calculateAverageRating, sumRatingCounts, createEmptyRatingsCountArray } from './utils/ratingUtils';
 
 export default defineComponent({
   name: 'App',
   components: {
-    StarRatingCountInput,
+    StarRatingCollection,
   },
   setup() {
-    const currentCountValues = ref<number[]>(new Array(5).fill(0));
-    const neededCountValues = ref<number[]>(new Array(5).fill(0));
+    const current = ref<number[]>(createEmptyRatingsCountArray());
+    const needed = ref<number[]>(createEmptyRatingsCountArray());
+    const currentRatings = ref();
+    const neededRatings = ref();
 
-    const updateCountCurrent = (index: number, newValue: number) => {
-      currentCountValues.value[index] = newValue;
+    const updateCurrent = (ratings: number[]) => {
+      current.value = [...ratings];
     };
-    const updateCountNeeded = (index: number, newValue: number) => {
-      neededCountValues.value[index] = newValue;
+    const updateNeeded = (ratings: number[]) => {
+      needed.value = [...ratings];
     };
 
     const averageRating = computed(() => calculateAverageRating(
-      sumRatingCounts(currentCountValues.value, neededCountValues.value)
+      sumRatingCounts(current.value, needed.value)
     ));
 
+    const resetCurrent = () => {
+      current.value = createEmptyRatingsCountArray();
+      currentRatings.value.reset();
+    };
+
+    const resetNeeded = () => {
+      needed.value = createEmptyRatingsCountArray();
+      neededRatings.value.reset();
+    };
+
     return {
-      currentCountValues,
-      neededCountValues,
-      updateCountCurrent,
-      updateCountNeeded,
+      updateCurrent,
+      updateNeeded,
+      resetCurrent,
+      resetNeeded,
       averageRating,
+      currentRatings,
+      neededRatings,
     };
   }
 });
@@ -36,50 +50,44 @@ export default defineComponent({
 
 <template>
   <div id="app">
-    <div class="app-container">
-      <hr>
-      <h2>Existing ratings</h2>
-      <hr>
-      <div v-for="i in 5" :key="i" class="rating-row">
-        <StarRatingCountInput :rating="i" :count="currentCountValues[i - 1]" @update:count="updateCountCurrent(i - 1, $event)" />
-      </div>
-      <hr>
-      <h2>New ratings</h2>
-      <hr>
-      <div v-for="i in 5" :key="i" class="rating-row">
-        <StarRatingCountInput :rating="i" :count="neededCountValues[i - 1]" @update:count="updateCountNeeded(i - 1, $event)" />
-      </div>
-      <hr>
-      <h2>New rating: {{ averageRating }}</h2>
-      <hr>
+    <h2>Ratings calculator</h2>
+    <hr>
+    <div class="inline-container">
+      <h2>Current</h2>
+      <div class="filler"></div>
+      <button @click="resetCurrent">Reset</button>
     </div>
+    <hr>
+    <StarRatingCollection @update:ratings="updateCurrent" ref="currentRatings" />
+    <hr>
+    <div class="inline-container">
+      <h2>New</h2>
+      <div class="filler"></div>
+      <button @click="resetNeeded">Reset</button>
+    </div>
+    <hr>
+    <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings"/>
+    <hr>
+    <h2>Averate rating: {{ averageRating.toFixed(3) }}</h2>
+    <hr>
   </div>
 </template>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  text-align: center;
-  margin-top: 8px;
-}
-
-/* Limit the width of the app and center it */
-.app-container {
-  max-width: 480px;
-  /* Set the maximum width */
-  margin: 0 auto;
-  /* Center the container */
+button {
   padding: 8px;
-  /* Optional padding for content spacing */
-}
-
-.rating-row {
-  margin-bottom: 10px;
-  /* Space between rows */
-}
-
-p {
-  font-size: 18px;
+  font-size: 16px;
+  color: #fff;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 8px;
   margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+button:hover {
+  background-color: #0056b3;
 }
 </style>

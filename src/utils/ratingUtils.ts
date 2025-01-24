@@ -33,3 +33,13 @@ export function sumRatingCounts(ratings1: number[], ratings2: number[]): number[
   // Create a new array by summing the corresponding elements of the input arrays
   return ratings1.map((count, index) => count + ratings2[index]);
 }
+
+/**
+ * Creates an array with five elements, each initialized to 0.
+ * Each element represents the count of ratings for a specific star value.
+ *
+ * @returns An array with five elements, each initialized to 0.
+ */
+export function createEmptyRatingsCountArray(): number[] {
+  return Array(5).fill(0);
+}
