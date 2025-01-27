@@ -51,43 +51,24 @@ export default defineComponent({
 <template>
   <div id="app">
     <h2>Ratings calculator</h2>
-    <hr>
+    <Divider />
     <div class="inline-container">
       <h2>Current</h2>
       <div class="filler"></div>
-      <button @click="resetCurrent">Reset</button>
+      <Button @click="resetCurrent" label="Reset" />
     </div>
-    <hr>
+    <Divider />
     <StarRatingCollection @update:ratings="updateCurrent" ref="currentRatings" />
-    <hr>
+    <Divider />
     <div class="inline-container">
       <h2>New</h2>
       <div class="filler"></div>
-      <button @click="resetNeeded">Reset</button>
+      <Button @click="resetNeeded" label="Reset" />
     </div>
-    <hr>
+    <Divider />
     <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings"/>
-    <hr>
+    <Divider />
     <h2>Averate rating: {{ averageRating.toFixed(3) }}</h2>
-    <hr>
+    <Divider />
   </div>
 </template>
-
-<style>
-button {
-  padding: 8px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-</style>
