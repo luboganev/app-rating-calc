@@ -51,25 +51,25 @@ export default defineComponent({
 <template>
   <div id="app">
     <h2>Ratings calculator</h2>
-    <hr>
+    <Divider />
     <div class="inline-container">
       <h2>Current</h2>
       <div class="filler"></div>
-      <button @click="resetCurrent">Reset</button>
+      <Button @click="resetCurrent" label="Reset" />
     </div>
-    <hr>
+    <Divider />
     <StarRatingCollection @update:ratings="updateCurrent" ref="currentRatings" />
-    <hr>
+    <Divider />
     <div class="inline-container">
       <h2>New</h2>
       <div class="filler"></div>
-      <button @click="resetNeeded">Reset</button>
+      <Button @click="resetNeeded" label="Reset" />
     </div>
-    <hr>
+    <Divider />
     <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings"/>
-    <hr>
+    <Divider />
     <h2>Averate rating: {{ averageRating.toFixed(3) }}</h2>
-    <hr>
+    <Divider />
   </div>
 </template>
 
