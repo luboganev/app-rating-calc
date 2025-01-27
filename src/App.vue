@@ -72,22 +72,3 @@ export default defineComponent({
     <Divider />
   </div>
 </template>
-
-<style>
-button {
-  padding: 8px;
-  font-size: 16px;
-  color: #fff;
-  background-color: #007bff;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  margin-left: 8px;
-  margin-top: 8px;
-  margin-bottom: 8px;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-</style>

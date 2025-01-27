@@ -12,7 +12,6 @@ export default defineComponent({
   setup(_, { emit }) {
     const ratings = ref<number[]>(createEmptyRatingsCountArray());
     const ratingCountInputItems = ref();
-    // const childRefs = ref<(typeof ChildComponent)['__vccOpts']['exposed'][]>([]);
 
     const updateRating = (index: number, newValue: number) => {
       ratings.value[index] = newValue;
