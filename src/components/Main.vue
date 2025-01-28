@@ -1,10 +1,11 @@
-<!-- eslint-disable vue/no-reserved-component-names -->
 <!-- eslint-disable vue/multi-word-component-names -->
-<script lang="ts">
-import { defineComponent, ref, computed } from 'vue';
+<script setup lang="ts">
+import { ref, computed } from 'vue';
 import StarRatingCollection from '@/components/StarRatingCollection.vue';
+
 import { calculateAverageRating, sumRatingCounts, createRatingsCountArray } from '@/utils/ratingUtils';
-import { useRouter, useRoute, Router } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
+import type { Router, LocationQueryValue } from 'vue-router';
 
 function replaceQueryParams(router: Router, currentRatings: Array<number>, neededRatings: Array<number>) {
   router.replace({
@@ -16,62 +17,50 @@ function replaceQueryParams(router: Router, currentRatings: Array<number>, neede
   });
 }
 
-export default defineComponent({
-  name: 'Main',
-  components: {
-    StarRatingCollection,
-  },
-  async setup() {
-    const router = useRouter();
-    const route = useRoute();
-    await router.isReady();
-    const urlCurrentRatings = route.query.current?.split(',')?.map(Number) ?? createRatingsCountArray();
-    const urlNeededRatings = route.query.needed?.split(',')?.map(Number) ?? createRatingsCountArray();
-
-    const current = ref<Array<number>>(createRatingsCountArray(urlCurrentRatings));
-    const needed = ref<Array<number>>(createRatingsCountArray(urlNeededRatings));
-
-    const currentRatings = ref();
-    const neededRatings = ref();
-
-    const updateCurrent = (ratings: Array<number>) => {
-      current.value = [...ratings];
-      replaceQueryParams(router, ratings, needed.value);
-    };
-    const updateNeeded = (ratings: Array<number>) => {
-      needed.value = [...ratings];
-      replaceQueryParams(router, current.value, ratings);
-    };
-
-    const averageRating = computed(() => calculateAverageRating(
-      sumRatingCounts(current.value, needed.value)
-    ));
-
-    const resetCurrent = () => {
-      current.value = createRatingsCountArray();
-      currentRatings.value.reset();
-      replaceQueryParams(router, current.value, needed.value);
-    };
-
-    const resetNeeded = () => {
-      needed.value = createRatingsCountArray();
-      neededRatings.value.reset();
-      replaceQueryParams(router, current.value, needed.value);
-    };
-
-    return {
-      current,
-      needed,
-      updateCurrent,
-      updateNeeded,
-      resetCurrent,
-      resetNeeded,
-      averageRating,
-      currentRatings,
-      neededRatings,
-    };
+function parseUrlRatingsOrFallback(value: string | LocationQueryValue[] | null, fallback: Array<number>): Array<number> {
+  if (typeof value === 'string') {
+    return value.split(',').map(Number);
+  } else {
+    return fallback;
   }
-});
+}
+
+const router = useRouter();
+const route = useRoute();
+await router.isReady();
+const urlCurrentRatings = parseUrlRatingsOrFallback(route.query.current, createRatingsCountArray());
+const urlNeededRatings = parseUrlRatingsOrFallback(route.query.needed, createRatingsCountArray());
+
+const current = ref<Array<number>>(createRatingsCountArray(urlCurrentRatings));
+const needed = ref<Array<number>>(createRatingsCountArray(urlNeededRatings));
+
+const currentRatings = ref();
+const neededRatings = ref();
+
+const updateCurrent = (ratings: Array<number>) => {
+  current.value = [...ratings];
+  replaceQueryParams(router, ratings, needed.value);
+};
+const updateNeeded = (ratings: Array<number>) => {
+  needed.value = [...ratings];
+  replaceQueryParams(router, current.value, ratings);
+};
+
+const averageRating = computed(() => calculateAverageRating(
+  sumRatingCounts(current.value, needed.value)
+));
+
+const resetCurrent = () => {
+  current.value = createRatingsCountArray();
+  currentRatings.value.reset();
+  replaceQueryParams(router, current.value, needed.value);
+};
+
+const resetNeeded = () => {
+  needed.value = createRatingsCountArray();
+  neededRatings.value.reset();
+  replaceQueryParams(router, current.value, needed.value);
+};
 </script>
 
 <template>

@@ -1,48 +1,36 @@
-<script lang="ts">
-import { defineComponent, ref } from 'vue';
+<script setup lang="ts">
+import { ref } from 'vue';
 import StarRatingCountInput from './StarRatingCountInput.vue';
 
-export default defineComponent({
-  name: 'StarRatingCollection',
-  components: {
-    StarRatingCountInput,
-  },
-  props: {
-    ratings: {
-      type: Array<number>,
-    },
-  },
-  emits: ['update:ratings'],
-  setup(props, { emit }) {
-    const ratingsCount = ref<Array<number>>(props.ratings);
-    const ratingCountInputItems = ref();
+const props = defineProps<{
+  ratings: Array<number>;
+}>();
 
-    const updateRating = (index: number, newValue: number) => {
-      ratingsCount.value[index] = newValue;
-      emit('update:ratings', ratingsCount.value);
-    };
+const emit = defineEmits<{
+  (event: 'update:ratings', ratings: Array<number>): void;
+}>();
 
-    const reset = () => {
-      ratingCountInputItems.value.forEach((item: (typeof StarRatingCountInput)) => {
-        item.reset();
-      });
-    };
+const ratingsCount = ref<Array<number>>(props.ratings);
+const ratingCountInputItems = ref();
 
-    return {
-      ratingsCount,
-      updateRating,
-      reset,
-      ratingCountInputItems,
-    };
-  }
-});
+const updateRating = (index: number, newValue: number) => {
+  ratingsCount.value[index] = newValue;
+  emit('update:ratings', ratingsCount.value);
+};
+
+const reset = () => {
+  ratingCountInputItems.value.forEach((item: (typeof StarRatingCountInput)) => {
+    item.reset();
+  });
+};
+
+defineExpose({ reset });
 </script>
 
 <template>
   <div v-for="i in 5" :key="i" class="ratingRow">
-    <StarRatingCountInput :ratingType="i" :count="ratingsCount[i - 1]"
-      @update:count="updateRating(i - 1, $event)"
-      ref="ratingCountInputItems"/>
+    <StarRatingCountInput :ratingType="i" :count="ratingsCount[i - 1]" @update:count="updateRating(i - 1, $event)"
+      ref="ratingCountInputItems" />
   </div>
 </template>
 

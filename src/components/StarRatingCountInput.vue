@@ -1,19 +1,17 @@
 <script setup lang="ts">
-
-import { ref, watch, defineProps, defineEmits, defineExpose } from 'vue';
+import { ref, watch } from 'vue';
 import IconStar from './icons/IconStar.vue';
 
-const props =
-  withDefaults(
-    defineProps<{
-      ratingType: number;
-      count: number;
-    }>(),
-    {
-      ratingType: 5,
-      count: 0,
-    }
-  );
+const props = withDefaults(
+  defineProps<{
+    ratingType: number;
+    count: number;
+  }>(),
+  {
+    ratingType: 5,
+    count: 0,
+  }
+);
 
 const emit = defineEmits<{
   (event: 'update:count', count: number): void;
