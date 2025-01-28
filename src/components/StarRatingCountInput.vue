@@ -1,41 +1,35 @@
-<script lang="ts">
+<script setup lang="ts">
 
-import { defineComponent, ref, watch } from 'vue';
+import { ref, watch, defineProps, defineEmits, defineExpose } from 'vue';
 import IconStar from './icons/IconStar.vue';
 
-export default defineComponent({
-  name: 'StarRatingCountInput',
-  components: {
-    IconStar,
-  },
-  props: {
-    ratingType: {
-      type: Number,
-      default: 5,
-    },
-    count: {
-      type: Number,
-      default: 0,
-    },
-  },
-  emits: ['update:count'],
-  setup(props, { emit }) {
-    const ratingsCount = ref(props.count);
-
-    watch(ratingsCount, (newVal) => {
-      emit("update:count", newVal);
-    })
-
-    const reset = () => {
-      ratingsCount.value = 0;
+const props =
+  withDefaults(
+    defineProps<{
+      ratingType: number;
+      count: number;
+    }>(),
+    {
+      ratingType: 5,
+      count: 0,
     }
+  );
 
-    return {
-      reset,
-      ratingsCount,
-    }
-  }
-});
+const emit = defineEmits<{
+  (event: 'update:count', count: number): void;
+}>();
+
+const ratingsCount = ref(props.count);
+
+watch(ratingsCount, (newVal) => {
+  emit("update:count", newVal);
+})
+
+const reset = () => {
+  ratingsCount.value = 0;
+}
+
+defineExpose({ reset });
 </script>
 
 <template>
