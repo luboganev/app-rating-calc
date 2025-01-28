@@ -36,9 +36,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="inline-container">
+  <div class="flexRow">
+    <div class="flexFill"></div>
     <IconStar v-for="i in rating" :key="i" />
-    <div class="filler"></div>
+    <div class="flexFill"></div>
     <InputNumber v-model="ratingsCount" showButtons buttonLayout="horizontal" :min="0" fluid class="text-input">
       <template #incrementbuttonicon>
         <span class="pi pi-plus" />
@@ -52,7 +53,8 @@ export default defineComponent({
 
 <style scoped>
 .text-input {
-  max-width: 160px;
-  min-width: 160px;
+  margin-left: 1rem;
+  max-width: 10rem;
+  min-width: 10rem;
 }
 </style>

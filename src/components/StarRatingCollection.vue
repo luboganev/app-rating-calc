@@ -35,7 +35,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div v-for="i in 5" :key="i" class="rating-row">
+  <div v-for="i in 5" :key="i" class="ratingRow">
     <StarRatingCountInput :rating="i" :count="ratings[i - 1]"
       @update:count="updateRating(i - 1, $event)"
       ref="ratingCountInputItems"/>
@@ -43,8 +43,7 @@ export default defineComponent({
 </template>
 
 <style>
-.rating-row {
-  margin-bottom: 10px;
-  /* Space between rows */
+.ratingRow {
+  margin-bottom: 1rem;
 }
 </style>

@@ -1,34 +1,31 @@
-@import './base.css';
-
-#app {
-  max-width: 480px;
-  min-width: 240px;
-  margin: 0 auto;
-  padding: 1rem;
-  font-weight: normal;
+body {
+  line-height: 1.6;
+  font-family:
+    Inter,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    'Fira Sans',
+    'Droid Sans',
+    'Helvetica Neue',
+    sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-a,
-.green {
-  text-decoration: none;
-  color: hsla(160, 100%, 37%, 1);
-  transition: 0.4s;
-  padding: 3px;
-}
-
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
-  }
-}
-
-.inline-container {
+.flexRow {
   display: flex;
   /* Use Flexbox for horizontal alignment */
   align-items: center;
   /* Center items vertically */
 }
 
-.filler {
+.flexFill {
   flex: 1;
 }

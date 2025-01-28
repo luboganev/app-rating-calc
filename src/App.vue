@@ -50,25 +50,49 @@ export default defineComponent({
 
 <template>
   <div id="app">
-    <h2>Ratings calculator</h2>
+    <h1>Ratings calculator</h1>
+    <p>This tools helps you assess how much effort it is to raise the average app rating based on its existing ratings.
+      You can find the code on
+      <a href="https://github.com/luboganev/app-rating-calc"><span class="pi pi-github"></span> GitHub</a>
+    </p>
     <Divider />
-    <div class="inline-container">
-      <h2>Current</h2>
-      <div class="filler"></div>
+    <div class="flexRow sectionHeader">
+      <div class="flexFill">
+        <h3>Current</h3>
+        Enter your current app ratings here.
+      </div>
       <Button @click="resetCurrent" label="Reset" />
     </div>
-    <Divider />
     <StarRatingCollection @update:ratings="updateCurrent" ref="currentRatings" />
     <Divider />
-    <div class="inline-container">
-      <h2>New</h2>
-      <div class="filler"></div>
+    <h3>Lifetime rating: {{ averageRating.toFixed(3) }}</h3>
+    <Divider />
+    <div class="flexRow sectionHeader">
+      <div class="flexFill">
+        <h3>New</h3>
+        Enter potential new ratings and see how they would impact the lifetime average.
+      </div>
       <Button @click="resetNeeded" label="Reset" />
     </div>
-    <Divider />
-    <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings"/>
-    <Divider />
-    <h2>Averate rating: {{ averageRating.toFixed(3) }}</h2>
+    <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings" />
     <Divider />
   </div>
 </template>
+
+<style scoped>
+#app {
+  max-width: 30rem;
+  min-width: 18rem;
+  margin: 0 auto;
+  padding: 1rem;
+  font-weight: normal;
+}
+
+Button {
+  margin-left: 0.5rem;
+}
+
+.sectionHeader {
+  margin-bottom: 1rem;
+}
+</style>
