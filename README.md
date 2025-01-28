@@ -1,6 +1,12 @@
 # app-rating-calc
 A simple web app that allows you to calculate how many new positive ratings you would need to push current app average rating above a certain value.
 
+## Features
+- Mobile friendly UI
+- Dark mode
+- Manually add rating number either with keyboard or by tapping + - buttons
+- Ratings are encoded in the url, so once you set the values up, you can share or bookmark the url so you don't have to type them in again.
+
 ## Recommended IDE Setup
 
 [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
