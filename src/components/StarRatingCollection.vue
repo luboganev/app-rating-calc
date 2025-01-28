@@ -1,21 +1,25 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import StarRatingCountInput from './StarRatingCountInput.vue';
-import { createRatingsCountArray } from '../utils/ratingUtils';
 
 export default defineComponent({
   name: 'StarRatingCollection',
   components: {
     StarRatingCountInput,
   },
+  props: {
+    ratings: {
+      type: Array<number>,
+    },
+  },
   emits: ['update:ratings'],
-  setup(_, { emit }) {
-    const ratings = ref<Array<number>>(createRatingsCountArray());
+  setup(props, { emit }) {
+    const ratingsCount = ref<Array<number>>(props.ratings);
     const ratingCountInputItems = ref();
 
     const updateRating = (index: number, newValue: number) => {
-      ratings.value[index] = newValue;
-      emit('update:ratings', ratings.value);
+      ratingsCount.value[index] = newValue;
+      emit('update:ratings', ratingsCount.value);
     };
 
     const reset = () => {
@@ -25,7 +29,7 @@ export default defineComponent({
     };
 
     return {
-      ratings,
+      ratingsCount,
       updateRating,
       reset,
       ratingCountInputItems,
@@ -36,7 +40,7 @@ export default defineComponent({
 
 <template>
   <div v-for="i in 5" :key="i" class="ratingRow">
-    <StarRatingCountInput :rating="i" :count="ratings[i - 1]"
+    <StarRatingCountInput :ratingType="i" :count="ratingsCount[i - 1]"
       @update:count="updateRating(i - 1, $event)"
       ref="ratingCountInputItems"/>
   </div>

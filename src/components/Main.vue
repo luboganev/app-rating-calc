@@ -25,7 +25,6 @@ export default defineComponent({
     const router = useRouter();
     const route = useRoute();
     await router.isReady();
-    console.log(route.query.current);
     const urlCurrentRatings = route.query.current?.split(',')?.map(Number) ?? createRatingsCountArray();
     const urlNeededRatings = route.query.needed?.split(',')?.map(Number) ?? createRatingsCountArray();
 
@@ -61,6 +60,8 @@ export default defineComponent({
     };
 
     return {
+      current,
+      needed,
       updateCurrent,
       updateNeeded,
       resetCurrent,
@@ -88,7 +89,7 @@ export default defineComponent({
       </div>
       <Button @click="resetCurrent" label="Reset" />
     </div>
-    <StarRatingCollection @update:ratings="updateCurrent" ref="currentRatings" />
+    <StarRatingCollection @update:ratings="updateCurrent" :ratings="current" ref="currentRatings" />
     <Divider />
     <h3>Lifetime rating: {{ averageRating.toFixed(3) }}</h3>
     <Divider />
@@ -99,7 +100,7 @@ export default defineComponent({
       </div>
       <Button @click="resetNeeded" label="Reset" />
     </div>
-    <StarRatingCollection @update:ratings="updateNeeded" ref="neededRatings" />
+    <StarRatingCollection @update:ratings="updateNeeded" :ratings="needed" ref="neededRatings" />
     <Divider />
   </div>
 </template>

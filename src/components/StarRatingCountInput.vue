@@ -1,7 +1,6 @@
 <script lang="ts">
 
 import { defineComponent, ref, watch } from 'vue';
-import type { PropType } from 'vue'
 import IconStar from './icons/IconStar.vue';
 
 export default defineComponent({
@@ -10,14 +9,18 @@ export default defineComponent({
     IconStar,
   },
   props: {
-    rating: {
-      type: Number as PropType<number>,
+    ratingType: {
+      type: Number,
       default: 5,
+    },
+    count: {
+      type: Number,
+      default: 0,
     },
   },
   emits: ['update:count'],
-  setup(_, { emit }) {
-    const ratingsCount = ref(0);
+  setup(props, { emit }) {
+    const ratingsCount = ref(props.count);
 
     watch(ratingsCount, (newVal) => {
       emit("update:count", newVal);
@@ -38,7 +41,7 @@ export default defineComponent({
 <template>
   <div class="flexRow">
     <div class="flexFill"></div>
-    <IconStar v-for="i in rating" :key="i" />
+    <IconStar v-for="i in ratingType" :key="i" />
     <div class="flexFill"></div>
     <InputNumber v-model="ratingsCount" showButtons buttonLayout="horizontal" :min="0" fluid class="text-input">
       <template #incrementbuttonicon>
