@@ -3,7 +3,7 @@
  * @param ratings - An array where each element represents the number of ratings for a specific star level.
  * @returns The average rating as a number.
  */
-export function calculateAverageRating(ratings: number[]): number {
+export function calculateAverageRating(ratings: Array<number>): number {
   let totalRatings = 0;
   let weightedRatingsSum = 0;
 
@@ -24,7 +24,7 @@ export function calculateAverageRating(ratings: number[]): number {
  * @param ratings2 - The second array of rating counts.
  * @returns A new array with the summed counts.
  */
-export function sumRatingCounts(ratings1: number[], ratings2: number[]): number[] {
+export function sumRatingCounts(ratings1: Array<number>, ratings2: Array<number>): Array<number> {
   // Check that both arrays have the same length
   if (ratings1.length !== ratings2.length) {
     throw new Error('Both rating arrays must have the same length.');
@@ -38,8 +38,15 @@ export function sumRatingCounts(ratings1: number[], ratings2: number[]): number[
  * Creates an array with five elements, each initialized to 0.
  * Each element represents the count of ratings for a specific star value.
  *
+ * @param urlRatings - An array of ratings counts.
+ *
  * @returns An array with five elements, each initialized to 0.
  */
-export function createEmptyRatingsCountArray(): number[] {
-  return Array(5).fill(0);
+export function createRatingsCountArray(urlRatings: Array<number> = Array<number>()): Array<number> {
+  const result = Array(5).fill(0);
+  const lengthToCopy = Math.min(urlRatings.length, result.length);
+  for (let i = 0; i < lengthToCopy; i++) {
+    result[i] = urlRatings[i];
+  }
+  return result;
 }

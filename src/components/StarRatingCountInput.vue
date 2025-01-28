@@ -1,44 +1,39 @@
-<script lang="ts">
-
-import { defineComponent, ref, watch } from 'vue';
-import type { PropType } from 'vue'
+<script setup lang="ts">
+import { ref, watch } from 'vue';
 import IconStar from './icons/IconStar.vue';
 
-export default defineComponent({
-  name: 'StarRatingCountInput',
-  components: {
-    IconStar,
-  },
-  props: {
-    rating: {
-      type: Number as PropType<number>,
-      default: 5,
-    },
-  },
-  emits: ['update:count'],
-  setup(_, { emit }) {
-    const ratingsCount = ref(0);
-
-    watch(ratingsCount, (newVal) => {
-      emit("update:count", newVal);
-    })
-
-    const reset = () => {
-      ratingsCount.value = 0;
-    }
-
-    return {
-      reset,
-      ratingsCount,
-    }
+const props = withDefaults(
+  defineProps<{
+    ratingType: number;
+    count: number;
+  }>(),
+  {
+    ratingType: 5,
+    count: 0,
   }
-});
+);
+
+const emit = defineEmits<{
+  (event: 'update:count', count: number): void;
+}>();
+
+const ratingsCount = ref(props.count);
+
+watch(ratingsCount, (newVal) => {
+  emit("update:count", newVal);
+})
+
+const reset = () => {
+  ratingsCount.value = 0;
+}
+
+defineExpose({ reset });
 </script>
 
 <template>
   <div class="flexRow">
     <div class="flexFill"></div>
-    <IconStar v-for="i in rating" :key="i" />
+    <IconStar v-for="i in ratingType" :key="i" />
     <div class="flexFill"></div>
     <InputNumber v-model="ratingsCount" showButtons buttonLayout="horizontal" :min="0" fluid class="text-input">
       <template #incrementbuttonicon>
