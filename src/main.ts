@@ -1,7 +1,8 @@
-/* eslint-disable vue/no-reserved-component-names */
-/* eslint-disable vue/multi-word-component-names */
+
+
 import "primeicons/primeicons.css";
 import './assets/main.css'
+import { router } from './router/router'
 
 import { createApp } from 'vue'
 import App from './App.vue'
@@ -13,13 +14,14 @@ import Button from "primevue/button";
 import Divider from 'primevue/divider';
 import InputNumber from 'primevue/inputnumber';
 
-const app = createApp(App);
-app.use(PrimeVue, {
+createApp(App)
+.use(router)
+.use(PrimeVue, {
   theme: {
       preset: Aura,
   },
-});
-app.component("Button", Button);
-app.component("Divider", Divider);
-app.component("InputNumber", InputNumber);
-app.mount('#app');
+})
+.component("Button", Button)
+.component("Divider", Divider)
+.component("InputNumber", InputNumber)
+.mount('#app');
