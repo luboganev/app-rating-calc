@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import IconStar from './icons/IconStar.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -12,6 +11,8 @@ const props = withDefaults(
     count: 0,
   }
 );
+
+const starsCount = ref(props.ratingType);
 
 const emit = defineEmits<{
   (event: 'update:count', count: number): void;
@@ -32,8 +33,7 @@ defineExpose({ reset });
 
 <template>
   <div class="flexRow">
-    <div class="flexFill"></div>
-    <IconStar v-for="i in ratingType" :key="i" />
+    <Rating v-model="starsCount" readonly disabled :stars="5" />
     <div class="flexFill"></div>
     <InputNumber v-model="ratingsCount" showButtons buttonLayout="horizontal" :min="0" fluid class="text-input">
       <template #incrementbuttonicon>
@@ -50,6 +50,6 @@ defineExpose({ reset });
 .text-input {
   margin-left: 1rem;
   max-width: 10rem;
-  min-width: 10rem;
+  min-width: 8rem;
 }
 </style>

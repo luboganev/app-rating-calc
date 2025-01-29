@@ -13,15 +13,26 @@ import Aura from '@primevue/themes/aura';
 import Button from "primevue/button";
 import Divider from 'primevue/divider';
 import InputNumber from 'primevue/inputnumber';
+import Rating from 'primevue/rating';
+import Accordion from 'primevue/accordion';
+import AccordionPanel from 'primevue/accordionpanel';
+import AccordionHeader from 'primevue/accordionheader';
+import AccordionContent from 'primevue/accordioncontent';
 
 createApp(App)
-.use(router)
-.use(PrimeVue, {
-  theme: {
+  .use(router)
+  .use(PrimeVue, {
+    theme: {
       preset: Aura,
-  },
-})
-.component("Button", Button)
-.component("Divider", Divider)
-.component("InputNumber", InputNumber)
-.mount('#app');
+    },
+    ripple: true,
+  })
+  .component("Button", Button)
+  .component("Divider", Divider)
+  .component("InputNumber", InputNumber)
+  .component("Rating", Rating)
+  .component("Accordion", Accordion)
+  .component("AccordionPanel", AccordionPanel)
+  .component("AccordionHeader", AccordionHeader)
+  .component("AccordionContent", AccordionContent)
+  .mount('#app');

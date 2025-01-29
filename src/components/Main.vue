@@ -25,6 +25,14 @@ function parseUrlRatingsOrFallback(value: string | LocationQueryValue[] | null, 
   }
 }
 
+function createAccordionTitle(title: string, ratings: Array<number>) {
+  const totalRatings = ratings.reduce((acc: number, rating: number) => acc + rating, 0);
+  if (totalRatings > 0) {
+    return `${title} (${totalRatings})`;
+  }
+  return title;
+}
+
 const router = useRouter();
 const route = useRoute();
 await router.isReady();
@@ -46,9 +54,7 @@ const updateNeeded = (ratings: Array<number>) => {
   replaceQueryParams(router, current.value, ratings);
 };
 
-const averageRating = computed(() => calculateAverageRating(
-  sumRatingCounts(current.value, needed.value)
-));
+const averageRating = computed(() => calculateAverageRating(sumRatingCounts(current.value, needed.value)));
 
 const resetCurrent = () => {
   current.value = createRatingsCountArray();
@@ -61,43 +67,75 @@ const resetNeeded = () => {
   neededRatings.value.reset();
   replaceQueryParams(router, current.value, needed.value);
 };
+
+const currentRatingsTitle = computed(() => {
+  return createAccordionTitle('Past ratings', current.value);
+});
+const neededRatingsTitle = computed(() => {
+  return createAccordionTitle('Future ratings', needed.value);
+});
+
+const accordionContentStyle = {
+  'content': {
+    style: {
+      padding: '0px'
+    }
+  }
+}
+const accordionHeaderStyle = {
+  'root': {
+    style: {
+      padding: '1.125rem 0 1.125rem 0',
+      margin: '0px'
+    }
+  }
+}
 </script>
 
 <template>
   <div id="app">
     <h1>Ratings calculator</h1>
-    <p>This tools helps you assess how much effort it is to raise the average app rating based on its existing ratings.
-      You can find the code on
+    <p>This tools helps you assess how many future positive ratings it would take to raise the average lifetime app rating based on its existing past
+      ratings.
+    </p>
+    <h3 style="margin: 0px;">Lifetime rating</h3>
+    <h1 style="margin: 0px;">{{ averageRating.toFixed(3) }}</h1>
+    <Accordion>
+      <AccordionPanel value="0">
+        <AccordionHeader :pt="accordionHeaderStyle">{{ currentRatingsTitle }}</AccordionHeader>
+        <AccordionContent :pt="accordionContentStyle">
+          <div class="flexRow sectionHeader">
+            <p class="flexFill">
+              Enter your current app ratings here.
+            </p>
+            <Button @click="resetCurrent" severity="secondary" label="Reset" />
+          </div>
+          <StarRatingCollection @update:ratings="updateCurrent" :ratings="current" ref="currentRatings" />
+        </AccordionContent>
+      </AccordionPanel>
+      <AccordionPanel value="1">
+        <AccordionHeader :pt="accordionHeaderStyle">{{ neededRatingsTitle }}</AccordionHeader>
+        <AccordionContent :pt="accordionContentStyle">
+          <div class="flexRow sectionHeader">
+            <p class="flexFill">
+              Enter potential new ratings and see how they would impact the lifetime average.
+            </p>
+            <Button @click="resetNeeded" severity="secondary" label="Reset" />
+          </div>
+          <StarRatingCollection @update:ratings="updateNeeded" :ratings="needed" ref="neededRatings" />
+        </AccordionContent>
+      </AccordionPanel>
+    </Accordion>
+    <p>Powered by passion for exploration. Code can be found on
       <a href="https://github.com/luboganev/app-rating-calc"><span class="pi pi-github"></span> GitHub</a>
     </p>
-    <Divider />
-    <div class="flexRow sectionHeader">
-      <div class="flexFill">
-        <h3>Current</h3>
-        Enter your current app ratings here.
-      </div>
-      <Button @click="resetCurrent" label="Reset" />
-    </div>
-    <StarRatingCollection @update:ratings="updateCurrent" :ratings="current" ref="currentRatings" />
-    <Divider />
-    <h3>Lifetime rating: {{ averageRating.toFixed(3) }}</h3>
-    <Divider />
-    <div class="flexRow sectionHeader">
-      <div class="flexFill">
-        <h3>New</h3>
-        Enter potential new ratings and see how they would impact the lifetime average.
-      </div>
-      <Button @click="resetNeeded" label="Reset" />
-    </div>
-    <StarRatingCollection @update:ratings="updateNeeded" :ratings="needed" ref="neededRatings" />
-    <Divider />
   </div>
 </template>
 
 <style scoped>
 #app {
   max-width: 30rem;
-  min-width: 18rem;
+  min-width: 20rem;
   margin: 0 auto;
   padding: 1rem;
   font-weight: normal;
