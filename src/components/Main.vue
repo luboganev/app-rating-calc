@@ -136,7 +136,7 @@ const accordionHeaderStyle = {
 <style scoped>
 #app {
   max-width: 480px;
-  min-width: 320px;
+  min-width: 240px;
   margin: 0 auto;
   padding: 16px;
   font-weight: normal;
