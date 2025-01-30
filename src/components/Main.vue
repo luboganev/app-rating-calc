@@ -78,14 +78,15 @@ const neededRatingsTitle = computed(() => {
 const accordionContentStyle = {
   'content': {
     style: {
-      padding: '0px'
+      padding: '0px',
+      backgroundColor: 'transparent',
     }
   }
 }
 const accordionHeaderStyle = {
   'root': {
     style: {
-      padding: '1.125rem 0 1.125rem 0',
+      backgroundColor: 'transparent',
       margin: '0px'
     }
   }
@@ -100,7 +101,7 @@ const accordionHeaderStyle = {
     </p>
     <h3 style="margin: 0px;">Lifetime rating</h3>
     <h1 style="margin: 0px;">{{ averageRating.toFixed(3) }}</h1>
-    <Accordion>
+    <Accordion multiple>
       <AccordionPanel value="0">
         <AccordionHeader :pt="accordionHeaderStyle">{{ currentRatingsTitle }}</AccordionHeader>
         <AccordionContent :pt="accordionContentStyle">
@@ -134,18 +135,18 @@ const accordionHeaderStyle = {
 
 <style scoped>
 #app {
-  max-width: 30rem;
-  min-width: 20rem;
+  max-width: 480px;
+  min-width: 240px;
   margin: 0 auto;
-  padding: 1rem;
+  padding: 16px;
   font-weight: normal;
 }
 
 Button {
-  margin-left: 0.5rem;
+  margin-left: 8px;
 }
 
 .sectionHeader {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 </style>

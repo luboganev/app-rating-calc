@@ -36,6 +36,6 @@ defineExpose({ reset });
 
 <style>
 .ratingRow {
-  margin-bottom: 1rem;
+  margin-bottom: 16px;
 }
 </style>
