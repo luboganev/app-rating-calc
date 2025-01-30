@@ -48,8 +48,8 @@ defineExpose({ reset });
 
 <style scoped>
 .text-input {
-  margin-left: 1rem;
-  max-width: 10rem;
-  min-width: 8rem;
+  margin-left: 16px;
+  max-width: 160px;
+  min-width: 128px;
 }
 </style>
