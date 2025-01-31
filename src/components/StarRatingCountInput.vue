@@ -54,7 +54,6 @@ const { width: availableWidth } = useWindowSize()
 
 <style scoped>
 .small-screen-stars {
-  margin: 0px;
   color: var(--p-primary-color);
 }
 .text-input {

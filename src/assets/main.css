@@ -29,3 +29,27 @@ body {
 .flexFill {
   flex: 1;
 }
+
+h1 {
+  margin: 0px;
+}
+
+h2 {
+  margin: 0px;
+}
+
+h3 {
+  margin: 0px;
+}
+
+h4 {
+  margin: 0px;
+}
+
+h5 {
+  margin: 0px;
+}
+
+h6 {
+  margin: 0px;
+}

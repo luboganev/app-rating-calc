@@ -99,9 +99,9 @@ const accordionHeaderStyle = {
     <p>This tools helps you assess how many future positive ratings it would take to raise the average lifetime app rating based on its existing past
       ratings.
     </p>
-    <h3 style="margin: 0px;">Lifetime rating</h3>
-    <h1 style="margin: 0px;">{{ averageRating.toFixed(3) }}</h1>
-    <Accordion multiple>
+    <h3>Lifetime rating</h3>
+    <h1>{{ averageRating.toFixed(3) }}</h1>
+    <Accordion multiple expandIcon="pi pi-pencil" collapseIcon="pi pi-chevron-up">
       <AccordionPanel value="0">
         <AccordionHeader :pt="accordionHeaderStyle">{{ currentRatingsTitle }}</AccordionHeader>
         <AccordionContent :pt="accordionContentStyle">
@@ -109,7 +109,7 @@ const accordionHeaderStyle = {
             <p class="flexFill">
               Enter your current app ratings here.
             </p>
-            <Button @click="resetCurrent" severity="secondary" label="Reset" />
+            <Button @click="resetCurrent" severity="danger" size="small" outlined label="Clear" />
           </div>
           <StarRatingCollection @update:ratings="updateCurrent" :ratings="current" ref="currentRatings" />
         </AccordionContent>
@@ -121,15 +121,14 @@ const accordionHeaderStyle = {
             <p class="flexFill">
               Enter potential new ratings and see how they would impact the lifetime average.
             </p>
-            <Button @click="resetNeeded" severity="secondary" label="Reset" />
+            <Button @click="resetNeeded" severity="danger" size="small" outlined label="Clear" />
           </div>
           <StarRatingCollection @update:ratings="updateNeeded" :ratings="needed" ref="neededRatings" />
         </AccordionContent>
       </AccordionPanel>
     </Accordion>
-    <p>Powered by passion for exploration. Code can be found on
-      <a href="https://github.com/luboganev/app-rating-calc"><span class="pi pi-github"></span> GitHub</a>
-    </p>
+    <p>Author: <a href="https://luboganev.dev/about">Lyubomir Ganev</a></p>
+    <p>Code available: <a href="https://github.com/luboganev/app-rating-calc"><span class="pi pi-github"></span> GitHub</a></p>
   </div>
 </template>
 
