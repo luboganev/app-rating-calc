@@ -94,6 +94,7 @@ const accordionHeaderStyle = {
 </script>
 
 <template>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content">
   <div id="app">
     <div class="flexRow">
       <img src="@/assets/images/rating-calc.svg" width="24" height="24" alt="Logo" class="svg-image" />
