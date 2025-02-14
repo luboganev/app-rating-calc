@@ -1,0 +1,36 @@
+<svg
+    width="84" height="84"
+    viewBox="0 0 84 84"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+>
+    <!-- Calculator Body -->
+    <rect x="14" y="2" width="60" stroke-width="4" height="80" rx="8" fill="#fff" stroke="#000" />
+    
+    <!-- Calculator Screen -->
+    <rect x="22" y="10" width="44" stroke-width="4" height="16" rx="2" fill="#ddd" stroke="#000" />
+    
+    <!-- Buttons -->
+    <circle cx="28" cy="38" r="6" fill="#000" />
+    <circle cx="44" cy="38" r="6" fill="#000" />
+    <circle cx="60" cy="38" r="6" fill="#000" />
+    <circle cx="28" cy="54" r="6" fill="#000" />
+    <circle cx="44" cy="54" r="6" fill="#000" />
+    <circle cx="60" cy="54" r="6" fill="#000" />
+    <circle cx="28" cy="70" r="6" fill="#000" />
+    <circle cx="44" cy="70" r="6" fill="#000" />
+    <circle cx="60" cy="70" r="6" fill="#000" />
+    
+    <!-- Stars in the display -->
+    <path 
+        d="M 30.9338 12.9484 L 32.3259 17.125 L 36.5025 17.125 L 33.1613 19.3525 L 34.275 23.2506 L 30.9338 21.0231 L 27.5925 23.2506 L 28.7063 19.3525 L 25.365 17.125 L 29.5416 17.125 L 30.9338 12.9484" 
+        fill="#000" />
+    <path 
+        d="M 43.9338 12.9484 L 45.3259 17.125 L 49.5025 17.125 L 46.1613 19.3525 L 47.275 23.2506 L 43.9338 21.0231 L 40.5925 23.2506 L 41.7062 19.3525 L 38.365 17.125 L 42.5416 17.125 L 43.9338 12.9484" 
+        fill="#000" />
+    <path 
+        d="M 56.9338 12.9484 L 58.3259 17.125 L 62.5025 17.125 L 59.1613 19.3525 L 60.275 23.2506 L 56.9338 21.0231 L 53.5925 23.2506 L 54.7062 19.3525 L 51.365 17.125 L 55.5416 17.125 L 56.9338 12.9484" 
+        fill="#000" />
+</svg>
+
+<!-- points="50,13 55,28 70,28 58,36 62,50 50,42 38,50 42,36 30,28 45,28"  -->

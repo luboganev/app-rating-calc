@@ -95,12 +95,17 @@ const accordionHeaderStyle = {
 
 <template>
   <div id="app">
-    <h1>Ratings calculator</h1>
+    <div class="flexRow">
+      <img src="@/assets/images/rating-calc.svg" width="24" height="24" alt="Logo" class="svg-image" />
+      <h1 class="Title">Ratings calculator</h1>
+    </div>
     <p>This tools helps you assess how many future positive ratings it would take to raise the average lifetime app rating based on its existing past
       ratings.
     </p>
-    <h3>Lifetime rating</h3>
-    <h1>{{ averageRating.toFixed(3) }}</h1>
+    <div class="stickyHeader">
+      <h3>Lifetime rating</h3>
+      <h1>{{ averageRating.toFixed(3) }}</h1>
+    </div>
     <Accordion multiple expandIcon="pi pi-pencil" collapseIcon="pi pi-chevron-up">
       <AccordionPanel value="0">
         <AccordionHeader :pt="accordionHeaderStyle">{{ currentRatingsTitle }}</AccordionHeader>
@@ -139,6 +144,19 @@ const accordionHeaderStyle = {
   margin: 0 auto;
   padding: 16px;
   font-weight: normal;
+}
+
+.Title {
+  margin-left: 8px;
+}
+
+.stickyHeader {
+  position: sticky;
+  top: 0; /* This sets when the element should stick */
+  background-color: var(--p-content-background); /* Background to prevent see-through */
+  z-index: 10; /* Ensures it's above other content */
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional for visual separation */
 }
 
 Button {
